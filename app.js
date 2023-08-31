@@ -7,8 +7,18 @@ const oauth = require("./oauth-login/index");
 const OIDC = require("./OIDC-login/index");
 const token = require("./token-login/index");
 const cookieParser = require("cookie-parser");
+const session = require("express-session");
 const port = 6666;
-
+/**
+ * @create_session
+ */
+app.use(
+  session({
+    secret: "your-secret-key",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
