@@ -6,9 +6,6 @@ const local = require("./local-login/index");
 const oauth = require("./oauth-login/index");
 const OIDC = require("./OIDC-login/index");
 const token = require("./token-login/index");
-<<<<<<< Updated upstream
-const port = 6666;
-=======
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const port = 6666;
@@ -25,7 +22,6 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
->>>>>>> Stashed changes
 
 app.use("/local", local);
 app.use("/oauth", oauth);

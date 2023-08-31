@@ -1,7 +1,3 @@
-<<<<<<< Updated upstream
-const router = require("express").Router();
-
-=======
 const { conn } = require("../config/mysql-config");
 const {
   cookieAuthMiddleware,
@@ -58,5 +54,4 @@ router.post("/logout/session", (req, res, next) => {
   });
 });
 
->>>>>>> Stashed changes
 module.exports = router;
