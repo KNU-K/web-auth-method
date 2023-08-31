@@ -1,7 +1,7 @@
 const { conn } = require("../config/mysql-config");
 
 module.exports = class LocalLoginService {
-  static login(userid, userpw) {
+  static cookieLogin(userid, userpw) {
     return new Promise((resolve, reject) => {
       conn.query(
         `select * from user where userid = '${userid}' and userpw = '${userpw}'`,
