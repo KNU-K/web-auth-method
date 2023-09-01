@@ -1,7 +1,6 @@
 const express = require("express");
 const { conn } = require("./config/mysql-config");
 const app = express();
-const redis = require("redis");
 const local = require("./local-login/index");
 const oauth = require("./oauth-login/index");
 const OIDC = require("./OIDC-login/index");
@@ -9,18 +8,28 @@ const token = require("./token-login/index");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const { client } = require("./config/redis-config");
-const port = 6666;
-
+const passport = require("passport");
+const port = 8000;
+const cors = require("cors");
 /**
  * @create_session
  */
 app.use(
+  cors({
+    sameSite: "none",
+    origin: true,
+    credentials: true,
+  })
+);
+app.use(
   session({
     secret: "your-secret-key",
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
   })
 );
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
