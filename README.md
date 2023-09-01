@@ -8,7 +8,7 @@
 2. ## [OAuth Login Method](./oauth-login/)
 
    - through google
-   - through twitter
+   - through naver
    - through kakao
 
 3. ## [Token Login Method](./token-login/)

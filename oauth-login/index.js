@@ -1,10 +1,17 @@
 const passport = require("passport");
-const { google } = require("./oauth-login.middleware");
+const { google, naver, kakao } = require("./oauth-login.middleware");
 
 const router = require("express").Router();
-
+/**
+ * @middleware
+ */
 passport.use("google", google);
+passport.use("naver", naver);
+passport.use("kakao", kakao);
 
+/**
+ * @GoogleStrategy
+ */
 router.get(
   "/google/login",
   passport.authenticate("google", { scope: ["profile", "email"] })
@@ -20,15 +27,36 @@ router.get(
   }
 );
 
-router.get("/profile", (req, res) => {
-  console.log(req.user);
-  if (req.user) {
-    res.send("login succeed");
-  } else {
-    res.send("login fail").status(403);
+/**
+ * @KakaoStrategy
+ */
+router.get("/kakao/login", passport.authenticate("kakao"));
+
+router.get(
+  "/kakao/login/callback",
+  passport.authenticate("kakao", {
+    failureRedirect: "http://localhost:3001/",
+  }),
+  (req, res) => {
+    res.redirect("http://localhost:3001/main");
   }
-});
-router.get("/google/logout", (req, res) => {
+);
+
+/**
+ * @NaverStrategy
+ */
+router.get("/naver/login", passport.authenticate("naver"));
+
+router.get(
+  "/naver/login/callback",
+  passport.authenticate("naver", {
+    failureRedirect: "http://localhost:3001/",
+  }),
+  (req, res) => {
+    res.redirect("http://localhost:3001/main");
+  }
+);
+router.get("/logout", (req, res) => {
   req.logOut((err) => {
     if (!err) res.send("good");
   });
